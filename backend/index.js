@@ -5,19 +5,24 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv")
 
 const userRouter = require("./routes/user.route")
+const authRouter = require("./routes/auth.route")
 
 dotenv.config();
+
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 mongoose.connect(process.env.MONGO).then(()=>{
     console.log("connected to db");    
 })
 .catch((err)=>{
     console.log(err);
-    
-})
+     
+}) 
 
 app.use("/user",userRouter)
+app.use("/auth",authRouter)
 
 app.listen(3000,()=>{
     console.log("It's running");    
-})
+}) 
