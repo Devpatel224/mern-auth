@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 
 const dotenv = require("dotenv")
 
+const userRouter = require("./routes/user.route")
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(()=>{
@@ -14,9 +16,7 @@ mongoose.connect(process.env.MONGO).then(()=>{
     
 })
 
-app.get("/",(req,res)=>{
-    res.send("Hey")
-})
+app.use("/user",userRouter)
 
 app.listen(3000,()=>{
     console.log("It's running");    
