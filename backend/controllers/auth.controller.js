@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model.js")
 const bcrypt = require('bcrypt')
+const { errorHandler } = require("../utils/error.js")
 
 exports.signup = async (req,res,next) => {
     try{const {username,email,password} = req.body  
