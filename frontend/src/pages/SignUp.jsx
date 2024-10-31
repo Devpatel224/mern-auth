@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate } from 'react-router-dom'
 import axios from "axios";
 
 
@@ -8,6 +8,7 @@ function SignUp() {
   const [formData, setFormData] = useState({})
   const [error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const handleChange = (e)=>{
     setFormData({
@@ -25,9 +26,14 @@ function SignUp() {
     setLoading(true)
     let res = await axios.post(
       "http://localhost:3000/auth/signup",
-      formData,
+      formData,{
+        withCredentials:true
+      }
     )
-    console.log(res);
+    console.log(res)
+    if(res.status == 200){
+      navigate('/')
+    }
     setLoading(false) 
     setError(false)   
   }
