@@ -8,7 +8,9 @@ import OAuth from '../components/OAuth'
 
 function SignIn() {
  const [formData, setFormData] = useState({})
- const {error,loading} = useSelector((state)=>state.user)
+ const {error,loading,currentUser} = useSelector((state)=>state.user)
+
+//  console.log(error,loading,currentUser)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
