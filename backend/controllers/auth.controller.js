@@ -33,14 +33,13 @@ exports.signin = async (req, res, next) => {
     //  console.log(validUser._doc);
     const { password: hashedPassword, ...rest } = validUser._doc;
 
-    const token = jwt.sign(
+    const token = jwt.sign(   
       { email, username: validUser.username, id: validUser._id },
       process.env.JWT_KEY
     );
 
     const expiryDate = new Date(Date.now() + 3600000);
-    res
-      .cookie("token", token, { httpOnly: true, expires: expiryDate })
+    res.cookie("token", token, { httpOnly: true, expires: expiryDate })
       .status(200)
       .json(rest);
   } catch (err) {

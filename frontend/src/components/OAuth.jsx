@@ -1,13 +1,16 @@
 import React from 'react'
 import {GoogleAuthProvider, signInAnonymously, signInWithPopup , getAuth} from 'firebase/auth'
 import { app } from '../firebase';
-import { useDispatch } from 'react-redux';
-import { signInSuccess } from '../redux/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInFail, signInSuccess } from '../redux/user/userSlice';
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 function OAuth() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const {error} = useSelector((state)=>state.user)
+
     const handleGoogleClick = async () => {
         try{
             const provider = new GoogleAuthProvider();
@@ -18,10 +21,11 @@ function OAuth() {
                 email:result.user.email,
                 photo:result.user.photoURL
             },{withCredentials:true})
-            console.log(res)
+         
             dispatch(signInSuccess(res))
+            navigate("/")
         }catch(error){
-            console.log("Could Not login with google",error)
+            signInFail("Could Not login with google")
         }
     }
   return (

@@ -35,7 +35,7 @@ function SignIn() {
           withCredentials: true
         }
       )
-      
+      console.log(res)
       dispatch(signInSuccess(res))
       if(res.status == 200){
         navigate("/")

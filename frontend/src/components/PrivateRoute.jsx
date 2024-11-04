@@ -9,7 +9,7 @@ import SignIn from '../pages/SignIn'
 export default function () {
     
     const {error,loading,currentUser} = useSelector((state)=>state.user)
-    console.log(currentUser,error,loading)
+
   return (
     <>
     {currentUser ? (
