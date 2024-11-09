@@ -2,15 +2,15 @@ import React from 'react'
 import { useState } from 'react'
 import { Link,useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import { signInStart,signInFail,signInSuccess } from '../redux/user/userSlice'
+import { signInStart,signInFail,signInSuccess,setAuthenticate } from '../redux/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import OAuth from '../components/OAuth'
 
 function SignIn() {
+
+
  const [formData, setFormData] = useState({})
  const {error,loading,currentUser} = useSelector((state)=>state.user)
-
-//  console.log(error,loading,currentUser)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -22,11 +22,28 @@ function SignIn() {
     })
   }
 
+//   async function checkAuth() {
+//     try {
+//       const res =await axios.get("http://localhost:3000/auth/check",{
+//         withCredentials:true
+//       })
+//       console.log(res.data)
+//       if(res.data){
+//         dispatch(setAuthenticate(true))
+//       }
+//     } catch (error) {
+//       if(err.res){
+//            dispatch(signInFail(error.res.data.message))
+//       }
+//       else{
+//            dispatch(signInFail(error.message))
+//     }
+//   }
+// }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-
     try {
       dispatch(signInStart())
       let res = await axios.post(
@@ -35,9 +52,10 @@ function SignIn() {
           withCredentials: true
         }
       )
-      console.log(res)
+      
       dispatch(signInSuccess(res))
       if(res.status == 200){
+        dispatch(setAuthenticate(true))
         navigate("/")
       }    
     }
@@ -50,6 +68,9 @@ function SignIn() {
       }
     }
   }
+
+  
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl text-center font-semibold my-8'>Sign In</h1>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 
 function Header() {
-  const {currentUser} = useSelector((state)=>state.user)
+  const {currentUser,authenticated} = useSelector((state)=>state.user)
 
   
   return (
@@ -13,11 +13,11 @@ function Header() {
             <h1 className='font-bold'>Auth App</h1>
             </Link>
                 
-            <ul className='flex gap-4'>
+            <ul className='flex gap-4 items-center'>
                 <Link to='/'>Home</Link>
                 <Link to='/about'>About</Link>
                 <Link to='/profile'>
-                {currentUser ? (
+                {currentUser && authenticated == true ? (
                   <img src={currentUser.data.profilePicture}  alt="Profile" className='h-10 w-10 rounded-full object-cover'/>
                 ):"Sign In"
                 }                

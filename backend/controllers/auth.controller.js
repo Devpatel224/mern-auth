@@ -83,3 +83,20 @@ exports.google = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.checktoken = (req,res) => {
+    let token = req.cookies.token
+    if(token){
+      res.status(200).json({authenticated:true})
+    }
+    else{
+      res.json({authenticated:false})
+    }
+}
+
+exports.signout = async (req,res,next) => {
+  try{res.clearCookie("token").status(200).json("Signout Success!")}
+  catch(e){
+    next(e)
+  }
+}
